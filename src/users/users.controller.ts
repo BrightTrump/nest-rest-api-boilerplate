@@ -6,29 +6,26 @@ import {
   Param,
   Patch,
   Post,
-  Query,
 } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
   // GET /users
   @Get()
-  getAllUsers(
-    @Query('roles') role?: 'INTERN' | 'DESIGNER' | 'ENGINEER' | 'ADMIN',
-  ) {
-    return [];
+  getAllUsers() {
+    return this.UsersService.getAllUsers();
   }
 
   // GET /users/:id
   @Get(':id')
   getUser(@Param('id') id: string) {
-    return { id };
+    return this.UsersService.getUser();
   }
 
   // POST /users
   @Post()
   createUser(@Body() user: {}) {
-    return user;
+    return this.UsersService.createUser();
   }
 
   // PATCH /users:id

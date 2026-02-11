@@ -34,4 +34,24 @@ export class UsersService {
       role: 'INTERN',
     },
   ];
+
+  getAllUsers(role?: 'INTERN' | 'DESIGNER' | 'ENGINEER' | 'ADMIN') {
+    if (role) {
+      return this.users.filter((user) => user.role === role);
+    }
+    return this.users;
+  }
+
+  getUser(id: number) {
+    const user = this.users.find((user) => user.id === id);
+    return user;
+  }
+
+  createUser(user: {
+    name: string;
+    email: string;
+    role: 'INTERN' | 'DESIGNER' | 'ENGINEER' | 'ADMIN';
+  }) {
+    const usersByHighestId = [...this.users].sort((a, b) => (b.id = a.id));
+  }
 }
