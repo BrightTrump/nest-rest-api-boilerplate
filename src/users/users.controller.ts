@@ -10,8 +10,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateDto } from './dto/create-user.dto';
-import { UpdateDto } from './dto/update-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -34,9 +34,9 @@ export class UsersController {
   @Post()
   createUser(
     @Body()
-    user: CreateDto,
+    createUserdto: CreateUserDto,
   ) {
-    return this.usersService.createUser(user);
+    return this.usersService.createUser(createUserdto);
   }
 
   // PATCH /users:id
@@ -44,9 +44,9 @@ export class UsersController {
   updateUser(
     @Param('id', ParseIntPipe) id: number,
     @Body()
-    updateUser: UpdateDto,
+    updateUserDto: UpdateUserDto,
   ) {
-    return this.usersService.updateUser(id, updateUser);
+    return this.usersService.updateUser(id, updateUserDto);
   }
 
   // DELETE /users:id
