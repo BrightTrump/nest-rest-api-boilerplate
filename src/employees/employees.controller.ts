@@ -6,10 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Prisma } from '@prisma/client';
-import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 @Controller('employees')
 export class EmployeesController {
@@ -21,25 +22,25 @@ export class EmployeesController {
   }
 
   @Get()
-  findAll() {
-    return this.employeesService.findAll();
+  findAll(@Query('role') role?: 'INTERN' | 'DESIGNER' | 'ENGINEER' | 'ADMIN') {
+    return this.employeesService.findAll(role);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.employeesService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.employeesService.findOne(id);
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateEmployeeDto: Prisma.EmployeesUpdateInput,
   ) {
-    return this.employeesService.update(+id, updateEmployeeDto);
+    return this.employeesService.update(id, updateEmployeeDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.employeesService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.employeesService.remove(id);
   }
 }
