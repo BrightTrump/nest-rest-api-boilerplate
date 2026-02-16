@@ -10,16 +10,21 @@ export class EmployeesService {
   }
 
   findAll(role?: 'INTERN' | 'DESIGNER' | 'ENGINEER' | 'ADMIN') {
-    return this.databaseService.employees.findMany({
-      where: {
-        role,
-      },
-    });
-    return this.databaseService.employees.findMany();
+    if (role)
+      return this.databaseService.employees.findMany({
+        where: {
+          role,
+        },
+      });
+    return this.databaseService.employees.findMany({where:{role,}});
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} employee`;
+    return this.databaseService.employees.findUnique({
+      where: {
+        id,
+      },
+    });
   }
 
   update(id: number, updateEmployeeDto: Prisma.EmployeesUpdateInput) {
@@ -27,6 +32,10 @@ export class EmployeesService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} employee`;
+    return this.databaseService.employees.delete({
+      where: {
+        id,
+      },
+    });
   }
 }
