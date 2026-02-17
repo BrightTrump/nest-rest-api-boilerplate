@@ -16,6 +16,10 @@ export class DatabaseService extends PrismaClient implements OnModuleInit {
   }
 
   async onModuleInit() {
-    await this.$connect();
+    try {
+      await this.$connect();
+    } catch (err) {
+      console.error('Prisma failed to connect:', err);
+    }
   }
 }
